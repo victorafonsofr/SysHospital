@@ -1,0 +1,11 @@
+# Configuraes do VS Code
+.vscode/
+
+# Executveis da compilao (Windows e Linux)
+*.exe
+*.out
+SysHospital
+
+# Arquivos objeto intermedirios
+*.o
+*.obj
