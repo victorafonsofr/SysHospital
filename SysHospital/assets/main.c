@@ -1,5 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+// Tratamento multiplataforma para o Sleep e Windows API
+#ifdef _WIN32
+    #ifndef WIN32_LEAN_AND_MEAN
+        #define WIN32_LEAN_AND_MEAN
+    #endif
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
+
+#include "pacientes.h"
+
+#define MAX 50
 
 // Definições de cores ANSI
 #define RED       "\x1b[31m"
@@ -23,17 +38,13 @@ void limparTela() {
     #endif
 }
 
-void time_sleep(int segundos){
-
+// Função de tempo ajustada para funcionar em qualquer SO
+void time_sleep(int segundos) {
     #ifdef _WIN32
-        #include <windows.h>
-        Sleep(segundos*1000);
-
+        Sleep(segundos * 1000); // Windows recebe milissegundos
     #else
-        #include <unistd.h>
-        sleep(segundos);
+        sleep(segundos);        // Linux recebe segundos
     #endif
-
 }
 
 void exibirMenu() {
@@ -63,11 +74,10 @@ void exibirMenu() {
     printf(" "BG_WHITE BLACK "[03]" RESET GREEN " Inserir paciente na fila\n" RESET);
     printf(" "BG_WHITE BLACK "[04]" RESET GREEN " Atender proximo paciente\n" RESET);
     printf(" "BG_WHITE BLACK "[05]" RESET GREEN " Exibir fila de atendimentos\n" RESET);
-    printf(" "BG_WHITE BLACK "[06]" RESET GREEN " Exibir fila de prioridade\n" RESET);
-    printf(" "BG_WHITE BLACK "[07]" RESET GREEN " Histórico de antedimentos\n" RESET);
-    printf(" "BG_WHITE BLACK "[08]" RESET GREEN " Desfazer ultima acao\n" RESET);
-    printf(" "BG_WHITE BLACK "[09]" RESET GREEN " Exibir medicos de plantao\n" RESET);
-    printf(" "BG_WHITE BLACK "[10]" RESET GREEN " Buscar paciente\n" RESET);
+    printf(" "BG_WHITE BLACK "[06]" RESET GREEN " Historico de atendimentos\n" RESET);
+    printf(" "BG_WHITE BLACK "[07]" RESET GREEN " Desfazer ultima acao\n" RESET);
+    printf(" "BG_WHITE BLACK "[08]" RESET GREEN " Exibir medicos de plantao\n" RESET);
+    printf(" "BG_WHITE BLACK "[09]" RESET GREEN " Buscar paciente\n" RESET);
     printf("\n");
     printf(" "BG_WHITE BLACK "[0]" RESET RED " Sair do Sistema\n" RESET);
 
@@ -77,6 +87,12 @@ void exibirMenu() {
 
 int main() {
     int opcao;
+
+    //variáveis para manipular a inserção em listas
+    char nome[MAX], queixa[MAX];
+
+    //Lista de pacientes
+    ListaPacientes pacientes = pcria_lista();
 
     do {
         exibirMenu();
@@ -90,6 +106,29 @@ int main() {
             case 1:
                 printf(YELLOW "\n [i] Redirecionando para Cadastro...\n" RESET);
                 time_sleep(2);
+
+                limparTela();
+
+                while(getchar() != '\n'); // consome espaços com salto de linha
+
+                printf(GREEN"[!] Entre com o nome do paciente:\n"RESET);
+                printf(">> ");
+
+                fgets(nome, sizeof(nome), stdin);
+                nome[strcspn(nome, "\n")] = '\0'; //tira o /n e coloca um terminador nulo
+
+                printf("\n");
+                
+                printf(GREEN"[!] Entre com a queixa do paciente:\n"RESET);
+                printf(">> ");
+
+                fgets(queixa, sizeof(queixa), stdin);
+                queixa[strcspn(queixa, "\n")] = '\0'; //tira o /n e coloca um terminador nulo
+
+                printf("\n");
+
+                pinsere_elem(&pacientes, nome, queixa);
+                
                 break;
 
             case 2:
@@ -148,7 +187,7 @@ int main() {
 
         if (opcao != 0) {
             printf("\n Pressione Enter para continuar...");
-            getchar(); // Limpa o buffer do scanf
+
             getchar(); // Aguarda o usuário
         }
 
