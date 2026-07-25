@@ -13,6 +13,7 @@
 #endif
 
 #include "pacientes.h"
+#include "atendimentos.h"
 
 #define MAX 50
 
@@ -91,8 +92,14 @@ int main() {
     //variáveis para manipular a inserção em listas
     char nome[MAX], queixa[MAX];
 
-    //Lista de pacientes
+    //Listas e filas de pacientes
     ListaPacientes pacientes = pcria_lista();
+    FilaP fila_pacientes = pcria_fila();
+
+    int id_removido = 0; //variavel para indicar qual id foi atendido
+    int id = 0; //variavel que seleciona um id da lista de pacientes para adicionar a fila
+    int op_fila; //opcao a ser selecionada no menu de insercao na fila
+
 
     do {
         exibirMenu();
@@ -105,7 +112,7 @@ int main() {
         switch (opcao) {
             case 1:
                 printf(YELLOW "\n [i] Redirecionando para Cadastro...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
 
                 limparTela();
 
@@ -133,31 +140,101 @@ int main() {
 
             case 2:
                 printf(YELLOW "\n [i] Carregando pacientes...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
+
+                limparTela();
+
+                listar_pacientes(pacientes);
+
                 break;
 
             case 3:
                 printf(YELLOW "\n [i] Carregando menu de insercao...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
+
+                limparTela();
+
+                listar_pacientes(pacientes);
+
+                printf(GREEN"[i] Selecione o id do paciente a ser inserido na fila:\n"RESET);
+                printf(">> ");
+
+                if (scanf("%d", &id) != 1) {
+                        printf("[!] Entrada inválida.\n");
+                        while (getchar() != '\n');
+                        break;
+                }
+
+                printf("\n");
+
+                if(push(&fila_pacientes, pacientes, id) == 0){
+                    
+                    printf(GREEN"[i] Deseja cadastrar um novo paciente?\n (1) sim | (2) nao\n"RESET);
+                    printf(">> ");
+                    
+                    if (scanf("%d", &op_fila) != 1) {
+                        printf("[!] Entrada inválida.\n");
+                        while (getchar() != '\n');
+                        break;
+                    }
+
+                    printf("\n");
+                    getchar();
+                    if(op_fila == 1){
+                        
+                        printf(GREEN"[!] Entre com o nome do paciente:\n"RESET);
+                        printf(">> ");
+
+                        fgets(nome, sizeof(nome), stdin);
+                        nome[strcspn(nome, "\n")] = '\0'; //tira o /n e coloca um terminador nulo
+
+                        printf("\n");
+                        
+                        printf(GREEN"[!] Entre com a queixa do paciente:\n"RESET);
+                        printf(">> ");
+
+                        fgets(queixa, sizeof(queixa), stdin);
+                        queixa[strcspn(queixa, "\n")] = '\0'; //tira o /n e coloca um terminador nulo
+
+                        printf("\n");
+
+                        pinsere_elem(&pacientes, nome, queixa); //cadastra um novo paciente
+                        push_paciente_nao_cadastrado(&fila_pacientes,nome, queixa); //cadastra o paciente na fila
+                        
+                    
+                    }else if(op_fila!=2){
+                        printf("[i] Opcao invalida! acesse esse menu novamente para tentar denovo\n");
+                    }
+
+                }
+
+
                 break;
 
-            case 4:
+            case 4:    
+
                 printf(YELLOW "\n [i] Chamando proximo paciente...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
+
+                if(pop(&fila_pacientes, &id_removido)==1) printf("[i] o ID removido foi: %d\n", id_removido);
+
                 break;
 
             case 5:
                 printf(YELLOW "\n [i] Exibindo fila de pacientes...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
+
+                exibir_fila(fila_pacientes);
+
                 break;
 
             case 6:
                 printf(YELLOW "\n [i] Exibindo lista de prioridade...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
                 break;
             case 7:
                 printf(YELLOW "\n [i] Carregando historico de atendimentos...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
                 break;
 
             case 8:
@@ -168,26 +245,27 @@ int main() {
 
             case 9:
                 printf(YELLOW "\n [i] Exibindo medicos de plantao...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
                 break;
 
             case 10:
                 printf(YELLOW "\n [i] Buscando paciente...\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
                 break;
 
             case 0: //fazer sistema que verifica horas
                 printf(BOLD "\n Encerrando SysHospital. Tenha um bom dia!\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
                 break;
             default:
                 printf(RED "\n [!] Opcao invalida. Tente novamente.\n" RESET);
-                time_sleep(2);
+                time_sleep(1);
         }
 
         if (opcao != 0) {
             printf("\n Pressione Enter para continuar...");
 
+            getchar();
             getchar(); // Aguarda o usuário
         }
 

@@ -30,7 +30,7 @@ int plista_vazia(ListaPacientes lp){
 
 }
 
-int pinsere_elem(ListaPacientes *lp, char nome[50], char queixa[50]){
+int pinsere_elem(ListaPacientes *lp, char nome[MAX], char queixa[MAX]){
     
     ListaPacientes novo_paciente = (ListaPacientes) malloc(sizeof(struct paciente));
 
@@ -58,7 +58,7 @@ int pinsere_elem(ListaPacientes *lp, char nome[50], char queixa[50]){
 
 int premove_elem(ListaPacientes *lp, int id){
 
-    if(plista_vazia) return 0;
+    if(plista_vazia(*lp)) return 0;
 
     ListaPacientes aux = *lp; //ponteiro auxiliar para caminhar na memoria
 
@@ -75,14 +75,31 @@ int premove_elem(ListaPacientes *lp, int id){
         aux = aux->prox; // caminhar pela lista sem perder a ref principal
     
     if(aux->prox == NULL){
-        printf("[!] Não existe paciente a ser removido! [!]\n");
+        printf("[!] Não existe paciente a ser removido!\n");
         return 0;
     }
     
     ListaPacientes aux2 = aux->prox;
     aux->prox = aux->prox->prox;
     free(aux2);
+    
+    printf("[i] Registro do paciente foi excluído com sucesso!\n");
 
     return 1;
+
+}
+
+void listar_pacientes(ListaPacientes lp){
+
+    if(plista_vazia(lp)) {printf("[!] Nenhum paciente registrado!\n"); return;  }
+
+    ListaPacientes aux = lp;
+    int i = 0;
+    while(aux != NULL){
+
+        printf("[%d] ID: %d | paciente: %s\n",i+1, aux->id, aux->nome);
+        aux = aux->prox;
+        i++;
+    }
 
 }
