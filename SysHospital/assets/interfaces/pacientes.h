@@ -4,5 +4,6 @@ typedef struct paciente* ListaPacientes; //lista de pacientes
 
 ListaPacientes pcria_lista();
 int plista_vazia(ListaPacientes lp);
-int pinsere_elem(ListaPacientes *lp, char nome[50], char queixa[50]);
+int pinsere_elem(ListaPacientes *lp, char nome[], char queixa[]);
 int premove_elem(ListaPacientes *lp, int id);
+void listar_pacientes(ListaPacientes lp);
