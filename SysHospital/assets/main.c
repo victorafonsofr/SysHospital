@@ -76,9 +76,9 @@ void exibirMenu() {
     printf(" "BG_WHITE BLACK "[04]" RESET GREEN " Atender proximo paciente\n" RESET);
     printf(" "BG_WHITE BLACK "[05]" RESET GREEN " Exibir fila de atendimentos\n" RESET);
     printf(" "BG_WHITE BLACK "[06]" RESET GREEN " Historico de atendimentos\n" RESET);
-    printf(" "BG_WHITE BLACK "[07]" RESET GREEN " Desfazer ultima acao\n" RESET);
+    printf(" "BG_WHITE BLACK "[07]" RESET GREEN " Buscar paciente\n" RESET);
     printf(" "BG_WHITE BLACK "[08]" RESET GREEN " Exibir medicos de plantao\n" RESET);
-    printf(" "BG_WHITE BLACK "[09]" RESET GREEN " Buscar paciente\n" RESET);
+    printf(" "BG_WHITE BLACK "[09]" RESET GREEN " Desfazer ultima acao\n" RESET);
     printf("\n");
     printf(" "BG_WHITE BLACK "[0]" RESET RED " Sair do Sistema\n" RESET);
 
@@ -229,27 +229,22 @@ int main() {
                 break;
 
             case 6:
-                printf(YELLOW "\n [i] Exibindo lista de prioridade...\n" RESET);
+                printf(YELLOW "\n [i] Carregando historico de atendimentos...\n" RESET);
                 time_sleep(1);
                 break;
             case 7:
-                printf(YELLOW "\n [i] Carregando historico de atendimentos...\n" RESET);
+                printf(YELLOW "\n [i] Buscando paciente...\n" RESET);
                 time_sleep(1);
                 break;
 
             case 8:
-                printf(YELLOW "\n [i] Desfazendo ultima acao...\n" RESET);
+                printf(YELLOW "\n [i] Exibindo medicos de plantao...\n" RESET);
                 time_sleep(1);
                 limparTela();
                 break;
 
             case 9:
-                printf(YELLOW "\n [i] Exibindo medicos de plantao...\n" RESET);
-                time_sleep(1);
-                break;
-
-            case 10:
-                printf(YELLOW "\n [i] Buscando paciente...\n" RESET);
+                printf(YELLOW "\n [i] Desfazendo ultima acao...\n" RESET);
                 time_sleep(1);
                 break;
 
