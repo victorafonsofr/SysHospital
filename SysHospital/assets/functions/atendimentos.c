@@ -3,6 +3,7 @@
 #include <string.h>
 #include "atendimentos.h"
 #include "pacientes.h"
+#include "medicos.h"
 
 #define MAX 50
 
@@ -97,6 +98,7 @@ int push(FilaP *fp, ListaPacientes paciente, int id){
 
     }
 
+    printf("[!] Paciente inserido na fila de atendimento!\n");
     return 1;
 
 }
@@ -144,10 +146,16 @@ int push_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX] ){ 
 
 }
 
-int pop(FilaP *fp, int *id){ //remoção sempre no inicio
+int pop(FilaP *fp, ListaCmedicos medicos, int *id){ //remoção sempre no inicio
 
     if(pfila_vazia(*fp)){
         printf("[!] A fila de pacientes está vazia, nada a remover por aqui!\n");
+        return 0;
+    }
+
+    if(mlista_vazia(medicos)){ // existem medicos para atender o paciente?
+        
+        printf("[!] Nao e possivel atender, nao ha medicos de plantao!\n");
         return 0;
     }
 
