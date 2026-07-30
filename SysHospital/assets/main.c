@@ -14,6 +14,7 @@
 
 #include "pacientes.h"
 #include "atendimentos.h"
+#include "medicos.h"
 
 #define MAX 50
 
@@ -52,22 +53,22 @@ void exibirMenu() {
     limparTela();
 
     printf(RED BOLD);
-    printf("           _ _ _ _ _\n");
-    printf("          |         |\n");
-    printf("          |         |\n");
-    printf("     _ _ _|         |_ _ _\n");
-    printf("    |                     |\n");
-    printf("    |     @SysHospital    |\n");
-    printf("    |_ _ _           _ _ _|\n");
-    printf("          |         |\n");
-    printf("          |         |\n");
-    printf("          |_ _ _ _ _|\n");
+    printf("                   _ _ _ _ _\n");
+    printf("                  |         |\n");
+    printf("                  |         |\n");
+    printf("             _ _ _|         |_ _ _\n");
+    printf("            |                     |\n");
+    printf("            |     @SysHospital    |\n");
+    printf("            |_ _ _           _ _ _|\n");
+    printf("                  |         |\n");
+    printf("                  |         |\n");
+    printf("                  |_ _ _ _ _|\n");
     printf(RESET);
     
     time_sleep(1);
 
     printf("\n" BOLD CYAN "  ------------------------------------------\n" RESET);
-    printf(BOLD "              MENU DE GESTAO\n" RESET);
+    printf(BOLD "                MENU DE GESTAO\n" RESET);
     printf(BOLD CYAN "  ------------------------------------------\n\n" RESET);
 
     printf(" "BG_WHITE BLACK "[01]" RESET GREEN " Cadastro de pacientes\n" RESET);
@@ -76,7 +77,7 @@ void exibirMenu() {
     printf(" "BG_WHITE BLACK "[04]" RESET GREEN " Atender proximo paciente\n" RESET);
     printf(" "BG_WHITE BLACK "[05]" RESET GREEN " Exibir fila de atendimentos\n" RESET);
     printf(" "BG_WHITE BLACK "[06]" RESET GREEN " Historico de atendimentos\n" RESET);
-    printf(" "BG_WHITE BLACK "[07]" RESET GREEN " Buscar paciente\n" RESET);
+    printf(" "BG_WHITE BLACK "[07]" RESET GREEN " Cadastrar novo medico\n" RESET);
     printf(" "BG_WHITE BLACK "[08]" RESET GREEN " Exibir medicos de plantao\n" RESET);
     printf(" "BG_WHITE BLACK "[09]" RESET GREEN " Desfazer ultima acao\n" RESET);
     printf("\n");
@@ -90,16 +91,18 @@ int main() {
     int opcao;
 
     //variáveis para manipular a inserção em listas
-    char nome[MAX], queixa[MAX];
+    char nome[MAX], queixa[MAX], crm[MAX];
 
-    //Listas e filas de pacientes
+    //Listas, filas de pacientes e fila de medicos (uma de plantao)
     ListaPacientes pacientes = pcria_lista();
     FilaP fila_pacientes = pcria_fila();
-
+    ListaCmedicos medicos = mcria_lista();
+    ListaCmedicos plantao = mcria_lista();
+    
     int id_removido = 0; //variavel para indicar qual id foi atendido
     int id = 0; //variavel que seleciona um id da lista de pacientes para adicionar a fila
     int op_fila; //opcao a ser selecionada no menu de insercao na fila
-
+    int cont = 0; //contador que
 
     do {
         exibirMenu();
@@ -216,7 +219,12 @@ int main() {
                 printf(YELLOW "\n [i] Chamando proximo paciente...\n" RESET);
                 time_sleep(1);
 
-                if(pop(&fila_pacientes, &id_removido)==1) printf("[i] o ID removido foi: %d\n", id_removido);
+                if(pop(&fila_pacientes, medicos,&id_removido)==1) printf("[i] o ID removido foi: %d\n", id_removido);
+                
+                if(plantao == NULL)
+                    plantao = cria_plantao(medicos);
+                
+                troca_plantao(&plantao, &cont);
 
                 break;
 
@@ -232,26 +240,57 @@ int main() {
                 printf(YELLOW "\n [i] Carregando historico de atendimentos...\n" RESET);
                 time_sleep(1);
                 break;
+
             case 7:
-                printf(YELLOW "\n [i] Buscando paciente...\n" RESET);
+                printf(YELLOW "\n [i] Abrindo menu de cadastro de novo medico...\n" RESET);
                 time_sleep(1);
+                
+                limparTela();
+
+                while(getchar() != '\n'); // consome espaços com salto de linha
+
+                printf(GREEN"[!] Entre com o nome do medico:\n"RESET);
+                printf(">> ");
+
+                fgets(nome, sizeof(nome), stdin);
+                nome[strcspn(nome, "\n")] = '\0'; //tira o /n e coloca um terminador nulo
+
+                printf("\n");
+                
+                printf(GREEN"[!] Entre com o CRM do medico:\n"RESET);
+                printf(">> ");
+
+                fgets(crm, sizeof(crm), stdin);
+                crm[strcspn(crm, "\n")] = '\0'; //tira o /n e coloca um terminador nulo
+
+                printf("\n");
+
+                minsere_elem(&medicos, nome, crm);
+
                 break;
 
             case 8:
                 printf(YELLOW "\n [i] Exibindo medicos de plantao...\n" RESET);
                 time_sleep(1);
-                limparTela();
-                break;
 
+                if(plantao == NULL)
+                    plantao = cria_plantao(medicos);
+                
+                    medico_plantao(plantao);
+
+                break;
+           
             case 9:
                 printf(YELLOW "\n [i] Desfazendo ultima acao...\n" RESET);
                 time_sleep(1);
+
                 break;
 
-            case 0: //fazer sistema que verifica horas
+            case 0: 
                 printf(BOLD "\n Encerrando SysHospital. Tenha um bom dia!\n" RESET);
                 time_sleep(1);
                 break;
+
             default:
                 printf(RED "\n [!] Opcao invalida. Tente novamente.\n" RESET);
                 time_sleep(1);
