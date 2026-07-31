@@ -167,3 +167,9 @@ ListaCmedicos atualiza_plantao(ListaCmedicos medicos){
 
     return plantao;
 }
+
+struct medico get_medico(ListaCmedicos plantao){
+
+    return *plantao;
+
+}

@@ -8,3 +8,4 @@ int mremove_elem(ListaCmedicos *lst, int id);
 void mimprime_lista(ListaCmedicos lst);
 int troca_plantao(ListaCmedicos *plantao, int *cont);
 void medico_plantao(ListaCmedicos plantao);
+struct medico get_medico(ListaCmedicos plantao);

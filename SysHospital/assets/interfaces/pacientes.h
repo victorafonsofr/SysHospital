@@ -1,4 +1,14 @@
+#define MAX 50
 typedef struct paciente* ListaPacientes; //lista de pacientes
+
+struct paciente
+{
+    int id;
+    char nome[MAX];
+    char queixa[MAX];
+    struct paciente *prox;
+
+};
 
 //lista encadeada simples
 

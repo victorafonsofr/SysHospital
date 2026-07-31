@@ -7,14 +7,7 @@
 
 #define MAX 50
 
-struct paciente
-{
-    int id;
-    char nome[MAX];
-    char queixa[MAX];
-    struct paciente *prox;
-
-};
+//ESTRUTURA FILA
 
 static int proximo_id = 1;
 
