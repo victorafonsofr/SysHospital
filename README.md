@@ -1,5 +1,16 @@
 # SysHospital
 
+                       _ _ _ _ _
+                      |         |
+                      |         |
+                 _ _ _|         |_ _ _
+                |                     |
+                |     @SysHospital    |
+                |_ _ _           _ _ _|
+                      |         |
+                      |         |
+                      |_ _ _ _ _|
+
 Como rodar o programa?
 
 cd /SysHospital/assets/ <br>
