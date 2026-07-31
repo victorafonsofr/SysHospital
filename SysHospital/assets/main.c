@@ -219,13 +219,14 @@ int main() {
                 printf(YELLOW "\n [i] Chamando proximo paciente...\n" RESET);
                 time_sleep(1);
 
-                if(pop(&fila_pacientes, medicos,&id_removido)==1) printf("[i] o ID removido foi: %d\n", id_removido);
-                
-                if(plantao == NULL)
-                    plantao = cria_plantao(medicos);
-                
-                troca_plantao(&plantao, &cont);
-
+                if(pop(&fila_pacientes, medicos,&id_removido)==1){ 
+                    printf("[i] o ID removido foi: %d\n", id_removido);
+            
+                    if(plantao == NULL)
+                        plantao = atualiza_plantao(medicos);
+                    
+                    troca_plantao(&plantao, &cont);
+                }
                 break;
 
             case 5:
@@ -266,6 +267,7 @@ int main() {
                 printf("\n");
 
                 minsere_elem(&medicos, nome, crm);
+                plantao = atualiza_plantao(medicos);
 
                 break;
 
@@ -274,9 +276,11 @@ int main() {
                 time_sleep(1);
 
                 if(plantao == NULL)
-                    plantao = cria_plantao(medicos);
+                    plantao = atualiza_plantao(medicos);
                 
                     medico_plantao(plantao);
+                    printf("\n [i] Medicos cadastrados \n");
+                    mimprime_lista(medicos);
 
                 break;
            
@@ -297,7 +301,7 @@ int main() {
         }
 
         if (opcao != 0) {
-            printf("\n Pressione Enter para continuar...");
+            printf("\n Pressione Enter duas vezes para continuar...");
 
             getchar();
             getchar(); // Aguarda o usuário

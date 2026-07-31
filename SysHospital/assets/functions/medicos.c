@@ -113,7 +113,7 @@ void mimprime_lista(ListaCmedicos lst){
         ListaCmedicos aux = lst->prox;
         int i = 0;
         do{
-            printf("[%d] ID do medico: %d | medico: Dr. %s | CRM: %s\n",i+1, aux->id_medico, aux->nome, aux->crm);
+            printf("\t[%d] ID do medico: %d | medico: Dr. %s | CRM: %s\n",i+1, aux->id_medico, aux->nome, aux->crm);
             aux = aux->prox;
             i++;
         }while(aux != lst->prox);
@@ -142,9 +142,7 @@ int troca_plantao(ListaCmedicos *plantao, int *cont){
         printf("[i] Plantao alterado!\n");
         printf("[i] Medico atual: Dr. %s\n", (*plantao)->nome);
 
-    }else
-        printf("\n\n[!] o Dr. %s e o proximo a atender\n", (*plantao)->prox->nome);
-
+    }
 
     return 1;
 
@@ -157,15 +155,21 @@ void medico_plantao(ListaCmedicos plantao){
         printf(" [!] Nenhum medico registrado!\n");
     }else{
 
-        printf(" \n[i] Medico atual: Dr. %s\n", plantao->nome);
+        printf("\n -> Medico atual em plantao: Dr. %s\n", plantao->nome);
 
     }
 
 }
 
-ListaCmedicos cria_plantao(ListaCmedicos medicos){
+ListaCmedicos atualiza_plantao(ListaCmedicos medicos){
 
     ListaCmedicos plantao  = medicos->prox;
 
     return plantao;
+}
+
+struct medico get_medico(ListaCmedicos plantao){
+
+    return *plantao;
+
 }
