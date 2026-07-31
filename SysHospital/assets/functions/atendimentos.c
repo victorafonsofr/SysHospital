@@ -149,7 +149,7 @@ int push_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX] ){ 
 int pop(FilaP *fp, ListaCmedicos medicos, int *id){ //remoção sempre no inicio
 
     if(pfila_vazia(*fp)){
-        printf("[!] A fila de pacientes está vazia, nada a remover por aqui!\n");
+        printf("[!] A fila de pacientes esta vazia, nada ha ninguem por aqui!\n");
         return 0;
     }
 

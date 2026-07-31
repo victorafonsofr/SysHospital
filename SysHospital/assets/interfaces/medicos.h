@@ -1,7 +1,7 @@
 typedef struct medico *ListaCmedicos;
 
 ListaCmedicos mcria_lista();
-ListaCmedicos cria_plantao(ListaCmedicos medicos);
+ListaCmedicos atualiza_plantao(ListaCmedicos medicos);
 int mlista_vazia(ListaCmedicos lst);
 int minsere_elem(ListaCmedicos *lst, char nome[], char crm[]);
 int mremove_elem(ListaCmedicos *lst, int id);
