@@ -1,5 +1,6 @@
 # SysHospital
-
+<center>
+<pre>
                        _ _ _ _ _
                       |         |
                       |         |
@@ -10,7 +11,8 @@
                       |         |
                       |         |
                       |_ _ _ _ _|
-
+</pre>
+</center> 
 Como rodar o programa?
 
 cd /SysHospital/assets/ <br>
