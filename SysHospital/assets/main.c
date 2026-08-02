@@ -12,9 +12,8 @@
     #include <unistd.h>
 #endif
 
-#include "pacientes.h"
 #include "atendimentos.h"
-#include "medicos.h"
+#include "historico_atendimento.h"
 
 #define MAX 50
 
@@ -99,7 +98,10 @@ int main() {
     ListaCmedicos medicos = mcria_lista();
     ListaCmedicos plantao = mcria_lista();
     
-    int id_removido = 0; //variavel para indicar qual id foi atendido
+    //historico de atendimentos
+    Historico_atendimento historico = criar_historico();
+
+    int id_atendido = 0; //variavel para indicar qual id foi atendido
     int id = 0; //variavel que seleciona um id da lista de pacientes para adicionar a fila
     int op_fila; //opcao a ser selecionada no menu de insercao na fila
     int cont = 0; //contador que
@@ -170,7 +172,7 @@ int main() {
 
                 printf("\n");
 
-                if(push(&fila_pacientes, pacientes, id) == 0){
+                if(queue(&fila_pacientes, pacientes, id) == 0){
                     
                     printf(GREEN"[i] Deseja cadastrar um novo paciente?\n (1) sim | (2) nao\n"RESET);
                     printf(">> ");
@@ -202,7 +204,7 @@ int main() {
                         printf("\n");
 
                         pinsere_elem(&pacientes, nome, queixa); //cadastra um novo paciente
-                        push_paciente_nao_cadastrado(&fila_pacientes,nome, queixa); //cadastra o paciente na fila
+                        queue_paciente_nao_cadastrado(&fila_pacientes,nome, queixa); //cadastra o paciente na fila
                         
                     
                     }else if(op_fila!=2){
@@ -219,12 +221,13 @@ int main() {
                 printf(YELLOW "\n [i] Chamando proximo paciente...\n" RESET);
                 time_sleep(1);
 
-                if(pop(&fila_pacientes, medicos,&id_removido)==1){ 
-                    printf("[i] o ID removido foi: %d\n", id_removido);
+                if(dequeue(&fila_pacientes, medicos,&id_atendido)==1){ 
+                    printf("[i] o ID removido foi: %d\n", id_atendido);
             
                     if(plantao == NULL)
                         plantao = atualiza_plantao(medicos);
                     
+                    insere_item_historico(&historico, get_paciente(pacientes, id_atendido), get_medico(plantao));
                     troca_plantao(&plantao, &cont);
                 }
                 break;
@@ -240,6 +243,10 @@ int main() {
             case 6:
                 printf(YELLOW "\n [i] Carregando historico de atendimentos...\n" RESET);
                 time_sleep(1);
+                limparTela();
+
+                mostrar_historico(historico);
+
                 break;
 
             case 7:

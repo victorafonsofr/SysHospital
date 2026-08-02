@@ -3,16 +3,6 @@
 #include <string.h>
 
 #include "medicos.h"
-#define MAX 50
-
-struct medico{
-
-    int id_medico;
-    char nome[MAX];
-    char crm[MAX];
-    struct medico *prox;
-
-};
 
 static int proximo_id = 1;
 
