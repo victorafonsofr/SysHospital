@@ -3,8 +3,6 @@
 #include <string.h>
 #include "pacientes.h"
 
-#define MAX 50
-
 static int proximo_id = 1;
 
 ListaPacientes pcria_lista(){
@@ -92,5 +90,25 @@ void listar_pacientes(ListaPacientes lp){
         aux = aux->prox;
         i++;
     }
+
+}
+
+//getter: pega o id que saiu da queue para procurar na lista de pacientes e retornar a struct paciente
+struct paciente get_paciente(ListaPacientes lpacientes, int id_atendido){
+
+    ListaPacientes aux = lpacientes;
+
+    while(aux != NULL && aux->id != id_atendido)
+          aux = aux->prox;
+    
+    if(aux == NULL){ //não tem paciente com essa id
+
+        struct paciente vazio;
+        vazio.id = -1;
+        return vazio;
+
+    }
+    
+    return *aux;
 
 }

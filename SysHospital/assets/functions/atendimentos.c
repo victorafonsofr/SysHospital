@@ -2,21 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "atendimentos.h"
-#include "pacientes.h"
-#include "medicos.h"
-
-#define MAX 50
 
 //ESTRUTURA FILA
 
 static int proximo_id = 1;
-
-struct filaP{
-
-    struct paciente *ini;
-    struct paciente *fim;
-
-};
 
 FilaP pcria_fila(){
 
@@ -41,7 +30,7 @@ int pfila_vazia(FilaP fp){
 
 }
 
-int push(FilaP *fp, ListaPacientes paciente, int id){
+int queue(FilaP *fp, ListaPacientes paciente, int id){
     //insere na fila um paciente que já está cadastrado
     if(plista_vazia(paciente)) return 0;
 
@@ -96,7 +85,7 @@ int push(FilaP *fp, ListaPacientes paciente, int id){
 
 }
 
-int push_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX] ){ //inserção sempre no final pois é fila, necessário verificar se a lista é vazia
+int queue_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX] ){ //inserção sempre no final pois é fila, necessário verificar se a lista é vazia
 
     if(fp == NULL || *fp == NULL){
         printf("[i] a fila selecionada nao existe\n");
@@ -139,7 +128,7 @@ int push_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX] ){ 
 
 }
 
-int pop(FilaP *fp, ListaCmedicos medicos, int *id){ //remoção sempre no inicio
+int dequeue(FilaP *fp, ListaCmedicos medicos, int *id){ //remoção sempre no inicio
 
     if(pfila_vazia(*fp)){
         printf("[!] A fila de pacientes esta vazia, nada ha ninguem por aqui!\n");
