@@ -19,13 +19,14 @@ int plista_vazia(ListaPacientes lp){
 
 }
 
-int pinsere_elem(ListaPacientes *lp, char nome[MAX], char queixa[MAX]){
+int pinsere_elem(ListaPacientes *lp, char nome[MAX], char queixa[MAX], int *id_atual){
     
     ListaPacientes novo_paciente = (ListaPacientes) malloc(sizeof(struct paciente));
 
     if(novo_paciente == NULL) return 0;
     
     novo_paciente->id = proximo_id;
+        *id_atual = proximo_id;
         proximo_id++; //auto incremento para facilitar remoção por id
     
     strncpy(novo_paciente->nome, nome, 49);

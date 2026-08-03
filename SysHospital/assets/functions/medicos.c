@@ -153,7 +153,13 @@ void medico_plantao(ListaCmedicos plantao){
 
 ListaCmedicos atualiza_plantao(ListaCmedicos medicos){
 
-    ListaCmedicos plantao  = medicos->prox;
+    if (mlista_vazia(medicos))
+    {
+        printf(" [!] Nenhum medico registrado!\n");
+        return NULL;
+    }
+    
+    ListaCmedicos plantao  = medicos->prox;    
 
     return plantao;
 }

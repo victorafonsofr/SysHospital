@@ -5,7 +5,6 @@
 
 //ESTRUTURA FILA
 
-static int proximo_id = 1;
 
 FilaP pcria_fila(){
 
@@ -85,7 +84,7 @@ int queue(FilaP *fp, ListaPacientes paciente, int id){
 
 }
 
-int queue_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX] ){ //inserção sempre no final pois é fila, necessário verificar se a lista é vazia
+int queue_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX], int id_atual_listapaciente ){ //inserção sempre no final pois é fila, necessário verificar se a lista é vazia
 
     if(fp == NULL || *fp == NULL){
         printf("[i] a fila selecionada nao existe\n");
@@ -97,8 +96,7 @@ int queue_paciente_nao_cadastrado(FilaP *fp, char nome[MAX] ,char queixa[MAX] ){
     if(novo_p_fila == NULL) return 0;
 
     //preenchendo ID
-    novo_p_fila->id = proximo_id;
-    proximo_id++;
+    novo_p_fila->id = id_atual_listapaciente; //já é automaticamente incrementado pelo TAD paciente
 
     //preenchendo nome
     strncpy(novo_p_fila->nome, nome, 49);
