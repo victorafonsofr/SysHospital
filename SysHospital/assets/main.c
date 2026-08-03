@@ -139,7 +139,7 @@ int main() {
 
                 printf("\n");
 
-                pinsere_elem(&pacientes, nome, queixa);
+                pinsere_elem(&pacientes, nome, queixa, &id);
                 
                 break;
 
@@ -203,8 +203,8 @@ int main() {
 
                         printf("\n");
 
-                        pinsere_elem(&pacientes, nome, queixa); //cadastra um novo paciente
-                        queue_paciente_nao_cadastrado(&fila_pacientes,nome, queixa); //cadastra o paciente na fila
+                        pinsere_elem(&pacientes, nome, queixa, &id); //cadastra um novo paciente
+                        queue_paciente_nao_cadastrado(&fila_pacientes,nome, queixa, id); //cadastra o paciente na fila
                         
                     
                     }else if(op_fila!=2){
@@ -285,10 +285,15 @@ int main() {
                 if(plantao == NULL)
                     plantao = atualiza_plantao(medicos);
                 
+                if(plantao != NULL){
+                    
                     medico_plantao(plantao);
                     printf("\n [i] Medicos cadastrados \n");
                     mimprime_lista(medicos);
-
+                    
+                }
+                
+                    
                 break;
            
             case 9:
@@ -308,7 +313,7 @@ int main() {
         }
 
         if (opcao != 0) {
-            printf("\n Pressione Enter duas vezes para continuar...");
+            printf("\n Pressione Enter para continuar...");
 
             getchar();
             getchar(); // Aguarda o usuário

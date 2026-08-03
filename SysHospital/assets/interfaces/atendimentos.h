@@ -18,7 +18,7 @@ struct filaP{
 FilaP pcria_fila();
 int pfila_vazia(FilaP fp);
 int dequeue(FilaP *fp,ListaCmedicos medicos, int *id);
-int queue_paciente_nao_cadastrado(FilaP *fp , char nome[], char queixa[]);
+int queue_paciente_nao_cadastrado(FilaP *fp , char nome[], char queixa[], int id_atual_listapaciente );
 int queue(FilaP *fp, ListaPacientes paciente,int id);
 void exibir_fila(FilaP fp);
 
