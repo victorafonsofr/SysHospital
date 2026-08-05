@@ -78,7 +78,8 @@ void exibirMenu() {
     printf(" "BG_WHITE BLACK "[06]" RESET GREEN " Historico de atendimentos\n" RESET);
     printf(" "BG_WHITE BLACK "[07]" RESET GREEN " Cadastrar novo medico\n" RESET);
     printf(" "BG_WHITE BLACK "[08]" RESET GREEN " Exibir medicos de plantao\n" RESET);
-    printf(" "BG_WHITE BLACK "[09]" RESET GREEN " Desfazer ultima acao\n" RESET);
+    printf(" "BG_WHITE BLACK "[09]" RESET GREEN " Buscar paciente por ID\n" RESET);
+    printf(" "BG_WHITE BLACK "[10]" RESET GREEN " Desfazer ultima acao\n" RESET);
     printf("\n");
     printf(" "BG_WHITE BLACK "[0]" RESET RED " Sair do Sistema\n" RESET);
 
@@ -171,7 +172,7 @@ int main() {
                 }
 
                 printf("\n");
-
+                
                 if(queue(&fila_pacientes, pacientes, id) == 0){
                     
                     printf(GREEN"[i] Deseja cadastrar um novo paciente?\n (1) sim | (2) nao\n"RESET);
@@ -297,6 +298,13 @@ int main() {
                 break;
            
             case 9:
+                printf(YELLOW "\n [i] Para buscar o paciente, digite o correspondente ID...\n" RESET);
+                time_sleep(1);
+
+                break;
+            
+            case 10:
+
                 printf(YELLOW "\n [i] Desfazendo ultima acao...\n" RESET);
                 time_sleep(1);
 

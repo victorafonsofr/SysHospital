@@ -54,7 +54,7 @@ int premove_elem(ListaPacientes *lp, int id){
 
     if(aux->id == id){ // se a primeira posição for quem eu quero remover
 
-        *lp = (*lp)->prox->prox;
+        *lp = (*lp)->prox;
         free(aux);
         
         return 1;
