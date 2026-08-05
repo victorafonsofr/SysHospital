@@ -21,4 +21,4 @@ cd /SysHospital/assets/ <br>
 gcc -I interfaces main.c .\functions\*.c -o SysHospital
 
 (linux)
-gcc -I interfaces main.c ./functions*.c -o SysHospital
+gcc -I interfaces main.c functions/*.c -o SysHospital
