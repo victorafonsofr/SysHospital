@@ -16,6 +16,7 @@ int pilha_vazia(Acao pilha){
     return 0;
 
 }
+
 Acao criar_acao(tipo_acao tipo, int id_paciente,char nome_paciente[],char queixa[],int id_medico,char nome_medico[],char crm[],int id_historico){
 
     Acao nova_acao = (Acao) malloc(sizeof(struct acao));
@@ -45,8 +46,9 @@ Acao criar_acao(tipo_acao tipo, int id_paciente,char nome_paciente[],char queixa
     return nova_acao;
 
 }
-void push(Acao* pilha, Acao nova){
 
+void push(Acao* pilha, Acao nova){
+        
     nova->prox = *pilha;
     *pilha = nova;
 
@@ -72,7 +74,7 @@ int desfazer_operacao(Acao* pilha, ListaPacientes *listaP, FilaP *filaP, ListaCm
         
         case inserir_fila:
 
-            remove_ultimapos_fila(listaP);
+            remove_ultimapos_fila(filaP);
 
             break;
         
@@ -183,4 +185,21 @@ int queue_prioridade(FilaP *fp, ListaPacientes paciente, int id){
     }
     return 1;
 
+}
+
+int pop(Acao *pilha){
+
+    if(pilha_vazia(*pilha)){ //nada a remover!
+        printf("[!] Nao ha nenhuma acao a ser desfeita!\n");
+        return 0;
+    }
+
+    Acao aux = *pilha;
+
+    *pilha = (*pilha)->prox;
+    free(aux);
+
+    printf("[i] Ultima alteracao desfeita com sucesso!\n");
+
+    return 1;
 }
