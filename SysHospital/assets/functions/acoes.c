@@ -209,4 +209,4 @@ void destruir_pilha(Acao *pilha)
     }
 
     *pilha = NULL;
-};
+}

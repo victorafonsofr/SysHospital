@@ -366,11 +366,12 @@ int main() {
     } while (opcao != 0);
 
     destruir_pilha(&pilha);
-    pdestroi_lista(&pacientes);
-    mdestroi_lista(&medicos);
-    mdestroi_lista(&plantao);
     destroi_historico(&historico);
     pdestroi_fila(&fila_pacientes);
+    pdestroi_lista(&pacientes);
+    mdestroi_lista(&medicos);
+
+    plantao = NULL;
 
     return 0;
 }
