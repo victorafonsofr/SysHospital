@@ -25,7 +25,7 @@ int hlista_vazia(Historico_atendimento historico){
     return 0;
 }
 
-int insere_item_historico(Historico_atendimento *historico, struct paciente pac, struct medico med){
+int insere_item_historico(Historico_atendimento *historico, struct paciente pac, struct medico med, int *id_hist){
 
     Historico_atendimento novo_item = (Historico_atendimento) malloc(sizeof(struct logHistorico));
 
@@ -67,7 +67,9 @@ int insere_item_historico(Historico_atendimento *historico, struct paciente pac,
 
     }
 
-    //sucesso ao inserir no historico
+    *id_hist = novo_item->id_historico;
+
+    //sucesso ao inserir no historico, retorna o id o historico
     return 1;
 
 }

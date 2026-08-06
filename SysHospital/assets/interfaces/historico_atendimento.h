@@ -1,3 +1,6 @@
+#ifndef HISTORICO_ATENDIMENTO_H
+#define HISTORICO_ATENDIMENTO_H
+
 #include "pacientes.h"
 #include "medicos.h"
 
@@ -23,7 +26,9 @@ struct logHistorico {
 
 Historico_atendimento criar_historico();
 int hlista_vazia(Historico_atendimento historico);
-int insere_item_historico(Historico_atendimento *historico, struct paciente pac, struct medico med);
+int insere_item_historico(Historico_atendimento *historico, struct paciente pac, struct medico med, int *id_hist);
 //nao é possivel remover item do historico por conta de politicas fictícias de segurança de pacientes
 void mostrar_historico(Historico_atendimento historico);
 int hremove_elem(Historico_atendimento *historico, int id_historico);
+
+#endif
