@@ -181,3 +181,27 @@ void exibir_fila(FilaP fp){
 
     }
 }
+
+void pdestroi_fila(FilaP *fila)
+{
+    if (fila == NULL || *fila == NULL) {
+        return;
+    }
+
+    ListaPacientes atual = (*fila)->ini;
+
+    while (atual != NULL) {
+        ListaPacientes proximo = atual->prox;
+
+        free(atual);
+
+        atual = proximo;
+    }
+
+    (*fila)->ini = NULL;
+    (*fila)->fim = NULL;
+
+    free(*fila);
+
+    *fila = NULL;
+}

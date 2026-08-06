@@ -43,12 +43,19 @@ Acao criar_acao(tipo_acao tipo, int id_paciente,char nome_paciente[],char queixa
     strncpy(nova_acao->crm, crm, 49);
     nova_acao->crm[49] = '\0';
 
+    nova_acao->id_historico = id_historico;
+
+    nova_acao->prox = NULL;
+
     return nova_acao;
 
 }
 
 void push(Acao* pilha, Acao nova){
-        
+    
+    if(pilha == NULL || nova == NULL)
+    return;
+
     nova->prox = *pilha;
     *pilha = nova;
 
@@ -56,53 +63,34 @@ void push(Acao* pilha, Acao nova){
 
 int desfazer_operacao(Acao* pilha, ListaPacientes *listaP, FilaP *filaP, ListaCmedicos *listamed, Historico_atendimento *hist ){
 
-    if(pilha_vazia(*pilha)){
-
-        printf("[!] Nenhuma alteração para desfazer!\n");
+    if(pilha == NULL || pilha_vazia(*pilha)){
+        printf("[!] Nenhuma alteracao para desfazer!\n");
         return 0;
-
     }
 
-    switch ((*pilha)->tipo){ //verificar o tipo de operaçao do primeiro item da pilha
-    
+    switch ((*pilha)->tipo){
         case cadastrarP:
-        
-            int id_temp = (*pilha)->id_paciente;
-            premove_elem(listaP, id_temp);    
-            
-            break;
-        
+            return premove_elem(listaP, (*pilha)->id_paciente);
+
         case inserir_fila:
+            return remove_ultimapos_fila(filaP);
 
-            remove_ultimapos_fila(filaP);
-
-            break;
-        
         case insere_historico:
+            return hremove_elem(hist, (*pilha)->id_historico);
 
-            hremove_elem(hist, (*pilha)->id_historico);
-
-            break;
-        
         case atender_pac:
-
-            queue_prioridade(filaP, *listaP, (*pilha)->id_paciente);
-
-            break;
+            /* Um atendimento altera a fila e o historico. */
+            if(!queue_prioridade(filaP, *listaP, (*pilha)->id_paciente))
+                return 0;
+            return hremove_elem(hist, (*pilha)->id_historico);
 
         case cadastrarM:
-
-            mremove_elem(listamed, (*pilha)->id_medico);
-
-            break;
+            return mremove_elem(listamed, (*pilha)->id_medico);
 
         default:
             printf("[!] Operacao invalida!\n");
-            break;
+            return 0;
     }
-
-    return 1;
-
 }
 
 int remove_ultimapos_fila(FilaP *fila){
@@ -142,7 +130,7 @@ int remove_ultimapos_fila(FilaP *fila){
 
 int queue_prioridade(FilaP *fp, ListaPacientes paciente, int id){
 
-    if(plista_vazia(paciente)) return 0;
+    if(fp == NULL || *fp == NULL || plista_vazia(paciente)) return 0;
 
     ListaPacientes aux = paciente;
 
@@ -189,7 +177,7 @@ int queue_prioridade(FilaP *fp, ListaPacientes paciente, int id){
 
 int pop(Acao *pilha){
 
-    if(pilha_vazia(*pilha)){ //nada a remover!
+    if(pilha == NULL || pilha_vazia(*pilha)){ //nada a remover!
         printf("[!] Nao ha nenhuma acao a ser desfeita!\n");
         return 0;
     }
@@ -203,3 +191,22 @@ int pop(Acao *pilha){
 
     return 1;
 }
+
+void destruir_pilha(Acao *pilha)
+{
+    if (pilha == NULL) {
+        return;
+    }
+
+    Acao atual = *pilha;
+
+    while (atual != NULL) {
+        Acao proxima = atual->prox;
+
+        free(atual);
+
+        atual = proxima;
+    }
+
+    *pilha = NULL;
+};

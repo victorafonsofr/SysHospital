@@ -113,3 +113,47 @@ struct paciente get_paciente(ListaPacientes lpacientes, int id_atendido){
     return *aux;
 
 }
+
+void busca_paciente(ListaPacientes lp, int id){
+
+    if(plista_vazia(lp)){
+        printf("[!] Lista de pacientes vazia, nada a buscar!\n");
+    }else{
+
+        ListaPacientes aux = lp;
+
+        while (aux != NULL && aux->id != id)
+            aux = aux->prox;
+        
+        if(aux == NULL){
+            printf("[!] Paciente nao cadastrado na lista!\n");
+        }else{
+            printf("================FICHA DO PACIENTE==============\n");
+            printf("\t- ID unico: %d\n",aux->id);
+            printf("\t- Nome: %s\n",aux->nome);  
+            printf("\t- Ultima queixa: %s\n",aux->queixa);
+
+        }
+
+    }
+
+}
+
+void pdestroi_lista(ListaPacientes *lp)
+{
+    if (lp == NULL) {
+        return;
+    }
+
+    ListaPacientes atual = *lp;
+
+    while (atual != NULL) {
+        ListaPacientes proximo = atual->prox;
+
+        free(atual);
+
+        atual = proximo;
+    }
+
+    *lp = NULL;
+}

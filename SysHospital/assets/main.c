@@ -109,6 +109,7 @@ int main() {
 
     int id_atendido = 0; //variavel para indicar qual id foi atendido
     int id = 0; //variavel que seleciona um id da lista de pacientes para adicionar a fila
+    int id_historico = 0; //variavel para guardar o id do historico
     int op_fila; //opcao a ser selecionada no menu de insercao na fila
     int cont = 0; //contador que
 
@@ -228,6 +229,9 @@ int main() {
                         printf("[i] Opcao invalida! acesse esse menu novamente para tentar denovo\n");
                     }
 
+                }else{
+                    nova = criar_acao(inserir_fila, id, " ", " ", 0, " ", " ", -1);
+                    push(&pilha, nova);
                 }
                 break;
 
@@ -242,8 +246,14 @@ int main() {
                     if(plantao == NULL)
                         plantao = atualiza_plantao(medicos);
                 
-                    insere_item_historico(&historico, get_paciente(pacientes, id_atendido), get_medico(plantao));
+                    insere_item_historico(&historico, get_paciente(pacientes, id_atendido), get_medico(plantao), &id_historico);
                     troca_plantao(&plantao, &cont);
+
+                    // O atendimento e uma unica acao de desfazer.
+                    nova = criar_acao(atender_pac, id_atendido, " ", " ", 0, " ", " ", id_historico);
+                    push(&pilha, nova);
+
+
                 }
                 break;
 
@@ -288,8 +298,11 @@ int main() {
 
                 printf("\n");
 
-                minsere_elem(&medicos, nome, crm);
-                plantao = atualiza_plantao(medicos);
+                if(minsere_elem(&medicos, nome, crm)){
+                    nova = criar_acao(cadastrarM, 0, " ", " ", medicos->id_medico, nome, crm, -1);
+                    push(&pilha, nova);
+                    plantao = atualiza_plantao(medicos);
+                }
 
                 break;
 
@@ -314,6 +327,9 @@ int main() {
             case 9:
                 printf(YELLOW "\n [i] Para buscar o paciente, digite o correspondente ID...\n" RESET);
                 time_sleep(1);
+                scanf("%d",&id);
+
+                busca_paciente(pacientes, id);
 
                 break;
             
@@ -322,6 +338,11 @@ int main() {
                 printf(YELLOW "\n [i] Desfazendo ultima acao...\n" RESET);
                 time_sleep(1);
 
+                if(desfazer_operacao(&pilha, &pacientes, &fila_pacientes,
+                                     &medicos, &historico)){
+                    pop(&pilha);
+                    plantao = medicos == NULL ? NULL : atualiza_plantao(medicos);
+                }
 
                 break;
 
@@ -343,6 +364,13 @@ int main() {
         }
 
     } while (opcao != 0);
+
+    destruir_pilha(&pilha);
+    pdestroi_lista(&pacientes);
+    mdestroi_lista(&medicos);
+    mdestroi_lista(&plantao);
+    destroi_historico(&historico);
+    pdestroi_fila(&fila_pacientes);
 
     return 0;
 }
