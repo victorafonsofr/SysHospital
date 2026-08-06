@@ -21,5 +21,7 @@ int pinsere_elem(ListaPacientes *lp, char nome[], char queixa[], int *id_atual);
 int premove_elem(ListaPacientes *lp, int id);
 void listar_pacientes(ListaPacientes lp);
 struct paciente get_paciente(ListaPacientes lpacientes, int id_atendido);
+void busca_paciente(ListaPacientes lp, int id);
+void pdestroi_lista(ListaPacientes *lp);
 
 #endif

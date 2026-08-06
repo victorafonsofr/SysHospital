@@ -191,3 +191,22 @@ int pop(Acao *pilha){
 
     return 1;
 }
+
+void destruir_pilha(Acao *pilha)
+{
+    if (pilha == NULL) {
+        return;
+    }
+
+    Acao atual = *pilha;
+
+    while (atual != NULL) {
+        Acao proxima = atual->prox;
+
+        free(atual);
+
+        atual = proxima;
+    }
+
+    *pilha = NULL;
+};

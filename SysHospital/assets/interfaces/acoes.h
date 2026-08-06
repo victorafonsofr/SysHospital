@@ -34,5 +34,6 @@ int desfazer_operacao(Acao* pilha, ListaPacientes *listaP, FilaP *filaP, ListaCm
 int pop(Acao *pilha);
 int remove_ultimapos_fila(FilaP *fila);
 int queue_prioridade(FilaP *fp, ListaPacientes paciente, int id);
+void destruir_pilha(Acao *pilha);
 
 #endif

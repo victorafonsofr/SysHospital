@@ -21,6 +21,6 @@ int dequeue(FilaP *fp,ListaCmedicos medicos, int *id);
 int queue_paciente_nao_cadastrado(FilaP *fp , char nome[], char queixa[], int id_atual_listapaciente );
 int queue(FilaP *fp, ListaPacientes paciente,int id);
 void exibir_fila(FilaP fp);
-
+void pdestroi_fila(FilaP *fila);
 
 #endif // ATENDIMENTOS_H

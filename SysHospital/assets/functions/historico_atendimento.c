@@ -154,3 +154,22 @@ int hremove_elem(Historico_atendimento *historico, int id_historico){
 
     return 1;
 }
+
+void destroi_historico(Historico_atendimento *historico)
+{
+    if (historico == NULL) {
+        return;
+    }
+
+    Historico_atendimento atual = *historico;
+
+    while (atual != NULL) {
+        Historico_atendimento proximo = atual->prox;
+
+        free(atual);
+
+        atual = proximo;
+    }
+
+    *historico = NULL;
+}

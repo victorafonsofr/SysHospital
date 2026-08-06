@@ -23,5 +23,6 @@ void mimprime_lista(ListaCmedicos lst);
 int troca_plantao(ListaCmedicos *plantao, int *cont);
 void medico_plantao(ListaCmedicos plantao);
 struct medico get_medico(ListaCmedicos plantao);
+void mdestroi_lista(ListaCmedicos *lista);
 
 #endif // MEDICOS_H

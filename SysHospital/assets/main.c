@@ -327,6 +327,9 @@ int main() {
             case 9:
                 printf(YELLOW "\n [i] Para buscar o paciente, digite o correspondente ID...\n" RESET);
                 time_sleep(1);
+                scanf("%d",&id);
+
+                busca_paciente(pacientes, id);
 
                 break;
             
@@ -361,6 +364,13 @@ int main() {
         }
 
     } while (opcao != 0);
+
+    destruir_pilha(&pilha);
+    pdestroi_lista(&pacientes);
+    mdestroi_lista(&medicos);
+    mdestroi_lista(&plantao);
+    destroi_historico(&historico);
+    pdestroi_fila(&fila_pacientes);
 
     return 0;
 }

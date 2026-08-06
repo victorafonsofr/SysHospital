@@ -169,3 +169,28 @@ struct medico get_medico(ListaCmedicos plantao){
     return *plantao;
 
 }
+
+void mdestroi_lista(ListaCmedicos *lista)
+{
+    if (lista == NULL || *lista == NULL) {
+        return;
+    }
+    // *lista aponta para o último médico.
+    //(*lista)->prox aponta para o primeiro médico.
+    
+    ListaCmedicos ultimo = *lista;
+    ListaCmedicos atual = ultimo->prox;
+
+    while (atual != ultimo) {
+        ListaCmedicos proximo = atual->prox;
+
+        free(atual);
+
+        atual = proximo;
+    }
+
+    //Libera o último nó, que não foi liberado no laço
+    free(ultimo);
+
+    *lista = NULL;
+}
