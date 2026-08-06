@@ -18,7 +18,7 @@ struct paciente
 ListaPacientes pcria_lista();
 int plista_vazia(ListaPacientes lp);
 int pinsere_elem(ListaPacientes *lp, char nome[], char queixa[], int *id_atual); // retorna tambem qual o id atual para inserir na fila
-int premove_elem(ListaPacientes *lp, int id); //função não será utilizada no código
+int premove_elem(ListaPacientes *lp, int id);
 void listar_pacientes(ListaPacientes lp);
 struct paciente get_paciente(ListaPacientes lpacientes, int id_atendido);
 
