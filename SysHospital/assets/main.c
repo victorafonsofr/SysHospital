@@ -14,6 +14,7 @@
 
 #include "atendimentos.h"
 #include "historico_atendimento.h"
+#include "acoes.h"
 
 #define MAX 50
 
@@ -102,6 +103,10 @@ int main() {
     //historico de atendimentos
     Historico_atendimento historico = criar_historico();
 
+    //pilha que guarda as alterações nas estruturas
+    Acao pilha = criar_pilha();
+    Acao nova = criar_pilha();
+
     int id_atendido = 0; //variavel para indicar qual id foi atendido
     int id = 0; //variavel que seleciona um id da lista de pacientes para adicionar a fila
     int op_fila; //opcao a ser selecionada no menu de insercao na fila
@@ -141,7 +146,10 @@ int main() {
                 printf("\n");
 
                 pinsere_elem(&pacientes, nome, queixa, &id);
-                
+            
+                nova = criar_acao(cadastrarP, id, nome, queixa, 0, " ", " ", -1); //não há nada de medico ou historico que foi criado
+                push(&pilha, nova);
+
                 break;
 
             case 2:
@@ -206,15 +214,21 @@ int main() {
 
                         pinsere_elem(&pacientes, nome, queixa, &id); //cadastra um novo paciente
                         queue_paciente_nao_cadastrado(&fila_pacientes,nome, queixa, id); //cadastra o paciente na fila
-                        
+
+                        //cadastro de paciente
+                        nova = criar_acao(cadastrarP, id, nome, queixa, 0, " ", " ", -1); //não há nada de medico ou historico que foi criado
+                        push(&pilha, nova);
+
+                        //ação de inserir na fila
+                        nova = criar_acao(inserir_fila, id, nome, queixa, 0, " ", " ", -1); //não há nada de medico ou historico que foi criado
+                        push(&pilha, nova);
+
                     
                     }else if(op_fila!=2){
                         printf("[i] Opcao invalida! acesse esse menu novamente para tentar denovo\n");
                     }
 
                 }
-
-
                 break;
 
             case 4:    
@@ -227,7 +241,7 @@ int main() {
             
                     if(plantao == NULL)
                         plantao = atualiza_plantao(medicos);
-                    
+                
                     insere_item_historico(&historico, get_paciente(pacientes, id_atendido), get_medico(plantao));
                     troca_plantao(&plantao, &cont);
                 }
@@ -307,6 +321,7 @@ int main() {
 
                 printf(YELLOW "\n [i] Desfazendo ultima acao...\n" RESET);
                 time_sleep(1);
+
 
                 break;
 
