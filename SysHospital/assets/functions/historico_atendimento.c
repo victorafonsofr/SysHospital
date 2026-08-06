@@ -124,3 +124,31 @@ void mostrar_historico(Historico_atendimento historico){
         }
     }
 }
+
+int hremove_elem(Historico_atendimento *historico, int id_historico){
+
+    if(hlista_vazia(*historico)) return 0;
+
+    Historico_atendimento aux = *historico;
+
+    //procura o registro pelo id_historico
+    while(aux != NULL && aux->id_historico != id_historico)
+        aux = aux->prox;
+
+    if(aux == NULL){
+        printf("[!] Nao existe registro de historico com esse id!\n");
+        return 0;
+    }
+
+    if(aux->ant != NULL)
+        aux->ant->prox = aux->prox;
+    else
+        *historico = aux->prox;
+
+    if(aux->prox != NULL)
+        aux->prox->ant = aux->ant;
+
+    free(aux);
+
+    return 1;
+}

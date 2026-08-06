@@ -26,3 +26,4 @@ int hlista_vazia(Historico_atendimento historico);
 int insere_item_historico(Historico_atendimento *historico, struct paciente pac, struct medico med);
 //nao é possivel remover item do historico por conta de politicas fictícias de segurança de pacientes
 void mostrar_historico(Historico_atendimento historico);
+int hremove_elem(Historico_atendimento *historico, int id_historico);

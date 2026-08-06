@@ -1,29 +1,38 @@
 #ifndef ACOES.H
 #define ACOES.H
+
 #include "atendimentos.h"
 #include "historico_atendimento.h"
 
+typedef struct acao *Acao;
+
 typedef enum tipo_acao{
-    cadastrar=1, remover, emprestimo, devolucao 
-}tipoacao;
+    cadastrarP, inserir_fila, insere_historico, atender_pac, cadastrarM 
+}tipo_acao;
 
-typedef struct acao{
+struct acao{
     tipo_acao tipo;
-    char isbn[11];
-    char titulo[100];
-    char autor[100];
-    int quantidade;
-    char cpf[12];
-    char nome[25];
-    int prioridade;
-    struct acao* prox;
-}acao;
-acao* criar_pilha();
-int pilha_vazia(acao* pilha);
-acao* criar_acao(tipoacao tipo,char isbn[],char titulo[],char autor[],int quantidade,char cpf[],char nome[],int prioridade);
-void empilhar(acao** pilha, acao* nova);
-acao* desempilhar(acao** pilha);
-int desfazer_acao(acao** pilha, Livro** lista, user* usuario, fila* prioridade_maxima, fila* prioridade_media, fila* prioridade_minima);
 
+    int id_paciente;
+    char nome_paciente[MAX];
+    char queixa[MAX];
+    
+    int id_medico;
+    char nome_medico[MAX];
+    char crm[MAX];
+
+    int id_historico;
+
+    struct acao* prox;
+};
+
+Acao criar_pilha();
+int pilha_vazia(Acao pilha);
+Acao criar_acao(tipo_acao tipo, int id_paciente,char nome_paciente[],char queixa[],int id_medico,char nome_medico[],char crm[],int id_historico);
+void push(Acao* pilha, Acao nova);
+int desfazer_operacao(Acao* pilha, ListaPacientes *listaP, FilaP *filaP, ListaCmedicos *listamed, Historico_atendimento *hist);
+Acao pop(Acao *pilha);
+int remove_ultimapos_fila(FilaP *fila);
+int queue_prioridade(FilaP *fp, ListaPacientes paciente, int id);
 
 #endif

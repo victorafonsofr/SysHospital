@@ -22,4 +22,5 @@ int queue_paciente_nao_cadastrado(FilaP *fp , char nome[], char queixa[], int id
 int queue(FilaP *fp, ListaPacientes paciente,int id);
 void exibir_fila(FilaP fp);
 
+
 #endif // ATENDIMENTOS_H
