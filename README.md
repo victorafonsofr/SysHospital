@@ -22,3 +22,11 @@ gcc -I interfaces main.c .\functions\*.c -o SysHospital
 
 (linux)
 gcc -I interfaces main.c functions/*.c -o SysHospital
+
+
+# Quais módulos implementam as listas?
+ Lista dinâmica simples-> pacientes.c
+ Lista dinâmica duplamente encadeada -> historico_atendimento.c
+ Lista dinâmica circular -> medicos.c
+ Fila dinâmica -> atendimentos.c
+ Pilha dinâmica -> acoes.c
