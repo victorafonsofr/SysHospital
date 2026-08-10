@@ -4,7 +4,7 @@ Sistema hospitalar desenvolvido em linguagem C para aplicar, de forma integrada,
 
 O projeto simula operações básicas do atendimento hospitalar em uma interface de terminal, permitindo organizar pacientes, médicos, filas de atendimento, histórico de consultas e ações que podem ser desfeitas.
 
-> **Status:** projeto acadêmico em desenvolvimento.
+> **Status:** projeto acadêmico desenvolvido.
 
 ## Funcionalidades
 
@@ -112,11 +112,3 @@ Esses avisos ajudam a identificar possíveis problemas no código, como variáve
 ## Objetivo acadêmico
 
 O SysHospital tem como objetivo demonstrar a aplicação prática de estruturas de dados em um problema realista. Cada estrutura foi escolhida conforme o comportamento necessário para a funcionalidade correspondente, como ordem de chegada, navegação bidirecional, rotação cíclica e reversão da última ação.
-
-## Autor
-
-Desenvolvido por [Victor Afonso](https://github.com/victorafonsofr).
-
-## Licença
-
-Este projeto foi desenvolvido para fins acadêmicos. Caso queira reutilizá-lo, consulte o autor.
